@@ -3,5 +3,6 @@
 
 #include"alloc/alloc.h"
 #include"node/node.h"
+#include"heap/heap.h"
 
 #endif
