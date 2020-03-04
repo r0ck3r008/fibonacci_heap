@@ -17,6 +17,9 @@ void *alloc(char *type, int size)
 		ret=malloc(size*sizeof(struct node));
 		explicit_bzero(ret, size*sizeof(struct node));
 
+	} else if(!strcmp(type, "struct heap")) {
+		ret=malloc(size*sizeof(struct heap));
+		explicit_bzero(ret, sizeof(struct heap)*size);
 	}
 
 	if(ret==NULL) {
@@ -34,7 +37,10 @@ void dealloc(void *buf, char *type, int size)
 		explicit_bzero((char *)buf, sizeof(char)*size);
 	} else if(!strcmp(type, "struct node")) {
 		explicit_bzero((struct node *)buf, sizeof(struct node)*size);
+	} else if(!strcmp(type, "struct heap")) {
+		explicit_bzero((struct heap *)buf, sizeof(struct heap)*size);
 	}
 
 	free(buf);
+	buf=NULL;
 }
