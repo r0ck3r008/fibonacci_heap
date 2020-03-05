@@ -7,4 +7,4 @@ alloc.o: alloc.c alloc.h
 	${COMPILER} ${COMPILER_FLAGS} alloc.c
 
 clean:
-	rm -r ./*.o
+	rm -f ./*.o
