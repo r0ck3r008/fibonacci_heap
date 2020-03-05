@@ -10,4 +10,4 @@ helper.o: helper.c helper.h
 	${COMPILER} ${COMPILER_FLAGS} helper.c
 
 clean:
-	rm -r ./*.o
+	rm -f ./*.o

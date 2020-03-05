@@ -7,4 +7,4 @@ node.o: node.c node.h
 	${COMPILER} ${COMPILER_FLAGS} node.c
 
 clean:
-	rm -r ./*.o
+	rm -f ./*.o
