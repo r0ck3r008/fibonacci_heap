@@ -1,44 +1,68 @@
+#include<stdio.h>
+
 #include"helper.h"
 
-void traverse(struct heap *heap_in, void (*fn)(struct node *))
+void traverse(struct heap *heap_in, void(*fn)(struct node *))
 {
+	//assuming the heap_in->trees is the starting pointer
 	struct node *curr_parent=heap_in->trees;
 	struct node *curr=curr_parent;
+
 	while(1) {
 		if(curr->nxt!=NULL) {
 			if(curr->child!=NULL) {
-				//found a deeper level, traverse to it
-				struct node *tmp=curr->child;
+				//traverse down a level
 				curr_parent=curr;
-				curr=tmp;
+				curr=curr->child;
 				continue;
 			}
+			//keep moving along
 			curr=curr->nxt;
 		} else {
-			//end of this level, no deeper level found
-			//delete this level now
+			//end of current level, execute given function on this
+			//level
 			fn(curr);
-			//move a level up
+			//move up a level
 			curr=curr_parent;
+			if(curr->parent!=NULL)
+				curr_parent=curr->parent;
+			else
+				//root level reached
+				break;
 		}
-		if(curr==heap_in->trees)
-			break;
 	}
 }
 
 void meld(struct node *tree1, struct node *tree2)
 {
-	if(tree1->val>tree2->val) {
-		tree2->parent=tree1;
-		if(tree1->child==NULL)
-			tree1->child=tree2;
-		else
-			add_node(tree1->child, tree2);
-	} else {
+	if(tree1->val < tree2->val) {
+		detach_node(tree1);
 		tree1->parent=tree2;
 		if(tree2->child==NULL)
 			tree2->child=tree1;
 		else
 			add_node(tree2->child, tree1);
+		tree2->children++;
+	} else {
+		detach_node(tree2);
+		tree2->parent=tree1;
+		if(tree1->child==NULL)
+			tree1->child=tree2;
+		else
+			add_node(tree1->child, tree2);
+		tree1->children++;
 	}
+}
+
+void detach_children(struct heap *heap_in, struct node *parent)
+{
+	struct node *curr=move_to_start(parent->child);
+	for(int i=0; i<parent->children; i++) {
+		struct node *tmp=curr->nxt;
+		detach_node(curr);
+		add_node(heap_in->trees, curr);
+		curr=tmp;
+	}
+
+	parent->children=0;
 }

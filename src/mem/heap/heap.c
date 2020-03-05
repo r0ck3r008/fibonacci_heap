@@ -5,21 +5,64 @@
 
 struct heap *init_heap(void *payload, int val)
 {
-	struct heap *new_heap=alloc("struct heap", 1);
-	new_heap->trees=init_list(payload, val);
+	struct heap *heap_new=alloc("struct heap", 1);
+	heap_new->trees=init_node(payload, val);
 
-	return new_heap;
+	return heap_new;
+}
+
+void insert(struct heap *heap_in, void *payload, int val)
+{
+	struct node *new_node=init_node(payload, val);
+	add_node(heap_in->trees, new_node);
+
+	if(heap_in->trees->val < new_node->val) {
+		make_start(new_node);
+		heap_in->trees=new_node;
+	}
+}
+
+struct node *remove_max(struct heap *heap_in)
+{
+	struct node *curr_max=heap_in->trees;
+	struct node *curr=curr_max->nxt;
+	detach_node(curr_max);
+
+	heap_in->trees=find_max(curr);
+
+	if(curr_max->children)
+		detach_children(heap_in, curr_max);
+
+	int flag=1;
+	curr=heap_in->trees;
+	while(flag) {
+		flag=0;
+		struct node *tmp;
+		for(tmp=heap_in->trees; tmp!=NULL;) {
+			if(tmp!=curr && tmp->children==curr->children) {
+				flag=1;
+				meld(tmp, curr);
+				break;
+			}
+			tmp=tmp->nxt;
+		}
+		if(flag)
+			curr=heap_in->trees;
+		else
+			curr=curr->nxt;
+	}
+
+	return curr_max;
+}
+
+void print_heap(struct heap *heap_in)
+{
+	traverse(heap_in, print_list);
 }
 
 void de_init_heap(struct heap *heap_in)
 {
 	traverse(heap_in, de_init_list);
-	dealloc(heap_in, "struct heap", 1);
-}
 
-void insert(struct heap *heap_in, struct node *new_node)
-{
-	add_node(heap_in->trees, new_node);
-	if(heap_in->trees->val<new_node->val)
-		heap_in->trees=new_node;
+	dealloc(heap_in, "struct heap", 1);
 }

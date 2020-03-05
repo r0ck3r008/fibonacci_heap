@@ -12,9 +12,10 @@ struct heap
 
 //Public API
 struct heap *init_heap(void *, int);
-void de_init_heap(struct heap *);
-void insert(struct heap *, struct node *);
+void insert(struct heap *, void *, int);
 struct node *remove_max(struct heap *);
 void inc_key(struct heap *, struct node *);
+void print_heap(struct heap *);
+void de_init_heap(struct heap *);
 
 #endif
