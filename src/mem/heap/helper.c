@@ -7,22 +7,25 @@ void traverse(struct heap *heap_in, void(*fn)(struct node *))
 	//assuming the heap_in->trees is the starting pointer
 	struct node *curr_parent=heap_in->trees;
 	struct node *curr=curr_parent;
+	struct node *last_child=NULL;
 
 	while(1) {
+		if(curr->child!=NULL && curr->child!=last_child) {
+			//traverse down a level
+			curr_parent=curr;
+			curr=curr->child;
+			continue;
+		}
+
 		if(curr->nxt!=NULL) {
-			if(curr->child!=NULL) {
-				//traverse down a level
-				curr_parent=curr;
-				curr=curr->child;
-				continue;
-			}
 			//keep moving along
-			curr=curr->nxt;
+				curr=curr->nxt;
 		} else {
-			//end of current level, execute given function on this
-			//level
+			//end of current level, execute given function
+			//on this level
 			fn(curr);
 			//move up a level
+			last_child=curr;
 			curr=curr_parent;
 			if(curr->parent!=NULL)
 				curr_parent=curr->parent;
@@ -63,6 +66,6 @@ void detach_children(struct heap *heap_in, struct node *parent)
 		add_node(heap_in->trees, curr);
 		curr=tmp;
 	}
-
+	parent->child=NULL;
 	parent->children=0;
 }
