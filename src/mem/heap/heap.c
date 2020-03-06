@@ -24,17 +24,26 @@ void insert(struct heap *heap_in, void *payload, int val)
 
 struct node *remove_max(struct heap *heap_in)
 {
+	if(heap_in->trees==NULL)
+		return NULL;
+
+	if(heap_in->trees->children)
+		detach_children(heap_in);
 	struct node *curr_max=heap_in->trees;
-	struct node *curr=curr_max->nxt;
-	detach_node(curr_max);
-
-	heap_in->trees=find_max(curr);
-
-	if(curr_max->children)
-		detach_children(heap_in, curr_max);
+	if(curr_max->nxt!=NULL) {
+		heap_in->trees=curr_max->nxt;
+		detach_node(curr_max);
+		heap_in->trees=find_max(heap_in->trees);
+	} else {
+		//if even after detaching children as first operation, the list
+		//curr_max->nxt is null, then it must be a single element in
+		//tree, thus not performing remove_max
+		detach_node(curr_max);
+		heap_in->trees=NULL;
+	}
 
 	int flag=1;
-	curr=heap_in->trees;
+	struct node *curr=heap_in->trees;
 	while(curr!=NULL) {
 		flag=0;
 		struct node *tmp;

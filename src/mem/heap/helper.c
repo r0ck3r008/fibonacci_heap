@@ -57,8 +57,9 @@ void meld(struct node *tree1, struct node *tree2)
 	}
 }
 
-void detach_children(struct heap *heap_in, struct node *parent)
+void detach_children(struct heap *heap_in)
 {
+	struct node *parent=heap_in->trees;
 	struct node *curr=move_to_start(parent->child);
 	for(int i=0; i<parent->children; i++) {
 		struct node *tmp=curr->nxt;
