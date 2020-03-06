@@ -26,12 +26,12 @@ int main(int argc, char *argv[])
 
 	print_heap(test_heap);
 
-	/*
 	for(int i=0; i<5; i++) {
 		struct node *max=remove_max(test_heap);
+		print_heap(test_heap);
 		printf("Key: %d\n", max->val);
 	}
-	*/
+
 
 	de_init_heap(test_heap);
 }
