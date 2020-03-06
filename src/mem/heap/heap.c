@@ -28,7 +28,7 @@ struct node *remove_max(struct heap *heap_in)
 		return NULL;
 
 	if(heap_in->trees->children)
-		detach_children(heap_in);
+		detach_children(heap_in, heap_in->trees);
 	struct node *curr_max=heap_in->trees;
 	if(curr_max->nxt!=NULL) {
 		heap_in->trees=curr_max->nxt;
@@ -66,6 +66,8 @@ struct node *remove_max(struct heap *heap_in)
 
 void print_heap(struct heap *heap_in)
 {
+	if(heap_in->trees==NULL)
+		return;
 	traverse(heap_in, print_list);
 }
 
