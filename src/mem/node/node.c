@@ -111,6 +111,9 @@ void detach_node(struct node *curr)
 		curr->nxt->prev=curr->prev;
 	if(curr->prev!=NULL)
 		curr->prev->nxt=curr->nxt;
+	curr->nxt=NULL;
+	curr->prev=NULL;
+	curr->parent=NULL;
 }
 
 void dealloc_node(struct node *curr)
