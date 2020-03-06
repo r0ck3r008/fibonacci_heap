@@ -35,7 +35,7 @@ struct node *remove_max(struct heap *heap_in)
 
 	int flag=1;
 	curr=heap_in->trees;
-	while(flag) {
+	while(curr!=NULL) {
 		flag=0;
 		struct node *tmp;
 		for(tmp=heap_in->trees; tmp!=NULL;) {
