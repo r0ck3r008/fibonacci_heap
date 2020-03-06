@@ -24,6 +24,10 @@ int main(int argc, char *argv[])
 	}
 
 	print_heap(test_heap);
+	printf("Enter value to search: \t");
+	int val;
+	scanf("%d", &val);
+	struct node *match=search_heap(test_heap, NULL, val);
 
 	for(int i=0; i<5; i++) {
 		struct node *max=remove_max(test_heap);
