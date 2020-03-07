@@ -14,8 +14,10 @@ struct heap
 struct heap *init_heap(void *, int);
 void insert(struct heap *, void *, int);
 struct node *remove_max(struct heap *);
-void inc_key(struct heap *, struct node *);
+void inc_key(struct heap *, void *, int);
 void print_heap(struct heap *);
+struct node *search_heap(struct heap *,
+			void *, int);
 void de_init_heap(struct heap *);
 
 #endif

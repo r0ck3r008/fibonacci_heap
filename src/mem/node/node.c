@@ -82,7 +82,38 @@ struct node *find_max(struct node *curr)
 	return curr_max;
 }
 
-void print_list(struct node *curr)
+int comp_nodes(struct node *node1, struct node *node2)
+{
+	if(node2==NULL)
+		return 1;
+	if(node1->val >= node2->val) {
+		if(node1->val == node2->val && node1->payload==node2->payload)
+			return 2;
+		else
+			return 1;
+	} else if(node1->val < node2->val) {
+		return -1;
+	}
+}
+
+struct node *search_list(struct node *list, struct node *trgt)
+{
+	struct node *start=move_to_start(list);
+	int flag=0;
+	for(start; start!=NULL; start=start->nxt) {
+		if(comp_nodes(start, trgt)==2) {
+			flag=1;
+			break;
+		}
+	}
+
+	if(flag)
+		return start;
+	else
+		return NULL;
+}
+
+void *print_list(struct node *curr)
 {
 	struct node *start=move_to_start(curr);
 	if(start->parent!=NULL)
@@ -92,9 +123,12 @@ void print_list(struct node *curr)
 	}
 
 	printf("%d\n", curr->val);
+
+	//return due to compatibility reasons with traverse
+	return NULL;
 }
 
-void de_init_list(struct node *curr)
+void *de_init_list(struct node *curr)
 {
 	struct node *start=move_to_start(curr);
 
@@ -103,17 +137,25 @@ void de_init_list(struct node *curr)
 	}
 
 	dealloc(start, "struct node", 1);
+
+	//for compatibility reasons with traverse, we return
+	return NULL;
 }
 
 void detach_node(struct node *curr)
 {
+	if(curr->parent!=NULL && curr->parent->child==curr) {
+		struct node *start=move_to_start(curr);
+		curr->parent->child=start;
+	}
+	curr->parent=NULL;
+
 	if(curr->nxt!=NULL)
 		curr->nxt->prev=curr->prev;
 	if(curr->prev!=NULL)
 		curr->prev->nxt=curr->nxt;
 	curr->nxt=NULL;
 	curr->prev=NULL;
-	curr->parent=NULL;
 }
 
 void dealloc_node(struct node *curr)

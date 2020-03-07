@@ -64,16 +64,40 @@ struct node *remove_max(struct heap *heap_in)
 	return curr_max;
 }
 
+void inc_key(struct heap *heap_in, void *payload, int val)
+{
+
+}
+
 void print_heap(struct heap *heap_in)
 {
 	if(heap_in->trees==NULL)
 		return;
-	traverse(heap_in, print_list);
+
+	traverse(heap_in, print_list, NULL);
+}
+
+struct node *search_heap(struct heap *heap_in, void *payload, int val)
+{
+	struct node *trgt=init_node(payload, val);
+	//initiate target
+	find(trgt);
+
+	traverse(heap_in, find, trgt);
+
+	struct node *match=(struct node *)find(NULL);
+	if(match==NULL)
+		printf("Unable to find node!\n");
+	else
+		printf("Node Found!!\n");
+
+	dealloc_node(trgt);
+	return match;
 }
 
 void de_init_heap(struct heap *heap_in)
 {
-	traverse(heap_in, de_init_list);
+	traverse(heap_in, de_init_list, NULL);
 
 	dealloc(heap_in, "struct heap", 1);
 }

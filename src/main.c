@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
 	uint32_t upper_bound=1000;
 	struct heap *test_heap;
-	for(int i=0; i<5; i++) {
+	for(int i=0; i<100; i++) {
 		uint32_t rand_num=randombytes_uniform(upper_bound);
 		if(!i) {
 			test_heap=init_heap(NULL, rand_num);
@@ -29,8 +29,12 @@ int main(int argc, char *argv[])
 	scanf("%d", &val);
 	struct node *match=search_heap(test_heap, NULL, val);
 
-	for(int i=0; i<5; i++) {
+	for(int i=0; i<100; i++) {
 		struct node *max=remove_max(test_heap);
+		if(max==NULL) {
+			printf("Breaking at: %d\n", i);
+			break;
+		}
 		printf("Key: %d\n", max->val);
 		print_heap(test_heap);
 		dealloc_node(max);
