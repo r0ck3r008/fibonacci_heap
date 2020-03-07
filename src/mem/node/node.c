@@ -146,7 +146,10 @@ void detach_node(struct node *curr)
 {
 	if(curr->parent!=NULL && curr->parent->child==curr) {
 		struct node *start=move_to_start(curr);
-		curr->parent->child=start;
+		if(curr!=start)
+			curr->parent->child=start;
+		else
+			curr->parent->child=start->nxt;
 	}
 	curr->parent=NULL;
 

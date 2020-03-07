@@ -64,9 +64,33 @@ struct node *remove_max(struct heap *heap_in)
 	return curr_max;
 }
 
-void inc_key(struct heap *heap_in, void *payload, int val)
+void inc_key(struct heap *heap_in, void *tar_payload, int tar_val, int inc_by)
 {
+	struct node *trgt_node=search_heap(heap_in, tar_payload, tar_val);
+	if(trgt_node==NULL)
+		return;
 
+	trgt_node->val=+inc_by;
+	struct node *parent=trgt_node->parent;
+	if(trgt_node->val > heap_in->trees->val) {
+		make_start(trgt_node);
+		heap_in->trees=trgt_node;
+	}
+
+	if(parent!=NULL && parent->val < trgt_node->val) {
+		detach_node(trgt_node);
+		add_node(heap_in->trees, trgt_node);
+		while(parent!=NULL && parent->loser!=0) {
+			parent->loser=1;
+			struct node *curr_parent=parent;
+			parent=curr_parent->parent;
+			if(curr_parent->loser) {
+				curr_parent->loser=0;
+				detach_node(curr_parent);
+				add_node(heap_in->trees, curr_parent);
+			}
+		}
+	}
 }
 
 void print_heap(struct heap *heap_in)
