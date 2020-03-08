@@ -1,12 +1,12 @@
 COMPILER := gcc
 COMPILER_FLAGS := -g -c
 LINKER_FLAGS := -g -o
-ALL_OBJS := mem/alloc/alloc.o mem/node/node.o mem/heap/heap.o mem/heap/helper.o
+ALL_OBJS := mem/alloc/alloc.o mem/node/node.o mem/heap/heap.o mem/heap/helper.o mem/hmap/hmap.o
 
-all: main_out clean_objs
+all: hashtagcounter clean_objs
 
-main_out: mem_objs main.o
-	${COMPILER} ${ALL_OBJS} main.o ${LINKER_FLAGS} main.out
+hashtagcounter: mem_objs main.o
+	${COMPILER} ${ALL_OBJS} main.o ${LINKER_FLAGS} hashtagcounter
 
 main.o: main.c
 	${COMPILER} ${COMPILER_FLAGS} main.c
@@ -20,4 +20,4 @@ clean_objs:
 	make -C tests/ clean
 
 clean: clean_objs
-	rm -f ./*.out
+	rm -f ./hashtagcounter
