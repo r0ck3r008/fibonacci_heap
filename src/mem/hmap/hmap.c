@@ -35,7 +35,7 @@ int hash_it(char *key)
 	return sum%HMAP_SIZE;
 }
 
-void insert_hmap(struct hmap *hmap_in, char *key, int val)
+struct node *insert_hmap(struct hmap *hmap_in, char *key, int val)
 {
 	int k=hash_it(key);
 	struct node *heap_node=init_node((void *)key, val);
@@ -47,6 +47,8 @@ void insert_hmap(struct hmap *hmap_in, char *key, int val)
 	} else {
 		add_node(hmap_in->map[k], hmap_node);
 	}
+
+	return heap_node;
 }
 
 struct node *get_addr(struct hmap *hmap_in, char *key)

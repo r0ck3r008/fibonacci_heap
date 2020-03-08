@@ -18,7 +18,8 @@ struct data
 struct hmap *init_hmap();
 struct data *init_data(struct node *, char *);
 int hash_it(char *);
-void insert_hmap(struct hmap *, char *, int);
+struct node *insert_hmap(struct hmap *,
+				char *, int);
 struct node *get_addr(struct hmap *, char *);
 void de_init_hmap(struct hmap *);
 
