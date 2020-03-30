@@ -24,7 +24,9 @@ int main(int argc, char *argv[])
 			insert(test_heap, rand_num, NULL);
 	}
 
-	for(int i=0; i<ELEMS; i++) {
+	u_limit=100;
+	uint32_t rand_limit=randombytes_uniform(100);
+	for(int i=0; i<rand_limit; i++) {
 		struct node *max=remove_max(test_heap);
 		if(max==NULL) {
 			printf("Broke at %d\n", i);
