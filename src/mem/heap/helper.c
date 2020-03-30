@@ -19,8 +19,9 @@ void traverse(struct heap *heap_in, void (fn)(struct node *))
 					//this means we are at top
 					curr_first=heap_in->max;
 				else
-					curr_first=curr;
+					curr_first=curr->nxt;
 				fn(curr->child);
+				curr->child=NULL;
 			} else {
 				//end of the top level
 				fn(heap_in->max);
