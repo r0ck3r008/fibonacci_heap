@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
 			insert(test_heap, rand_num, NULL);
 	}
 
-	u_limit=100;
-	uint32_t rand_limit=randombytes_uniform(100);
+	u_limit=1000;
+	uint32_t rand_limit=randombytes_uniform(u_limit);
 	for(int i=0; i<rand_limit; i++) {
 		struct node *max=remove_max(test_heap);
 		if(max==NULL) {
