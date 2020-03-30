@@ -69,3 +69,23 @@ struct node *remove_max(struct heap *heap_in)
 exit:
 	return curr_max;
 }
+
+void inc_key(struct heap *heap_in, struct node *trgt, int set_to)
+{
+	trgt->key=set_to;
+
+	if(trgt->parent!=NULL && trgt->key > trgt->parent->key) {
+		struct node *curr=trgt->parent;
+		while(curr!=NULL && curr->child_cut!=0) {
+			struct node *tmp=curr->parent;
+			detach_node(curr, 0);
+			add_node(heap_in->max, curr);
+			curr->child_cut=0;
+			curr=tmp;
+		}
+		detach_node(trgt, 0);
+		add_node(heap_in->max, trgt);
+	}
+	if(trgt->key > heap_in->max->key)
+		heap_in->max=trgt;
+}
