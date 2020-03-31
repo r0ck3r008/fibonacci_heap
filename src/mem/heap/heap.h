@@ -3,12 +3,15 @@
 
 struct heap
 {
-	struct node *max;
+	struct heap_node *max;
 };
 
-struct heap *init_heap(int);
-void de_init_heap(struct heap *);
-struct node *insert(struct heap *, int);
-struct node *remove_max(struct heap *);
+struct heap *heap_init(int, char *);
+void heap_de_init(struct heap *);
+struct heap_node *heap_insert(struct heap *, int,
+				char *);
+struct heap_node *heap_remove_max(struct heap *);
+void heap_inc_key(struct heap *,
+			struct heap_node *, int);
 
 #endif

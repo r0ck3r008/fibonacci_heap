@@ -3,20 +3,24 @@
 
 #include"../heap.h"
 
-struct node
+struct heap_node
 {
 	int key;
+	char *hash;
 	int child_cut;
 	int degree;
-	struct node *parent, *nxt, *prev, *child;
+	struct heap_node *parent, *nxt,
+				*prev, *child;
 };
 
-struct node *init_node(int);
-void mk_dbl_cir_lst(struct node *);
-struct node *detach_node(struct node *, int);
-struct node *de_init_node(struct node *);
-void de_init_list(struct node *);
-void add_node(struct node *, struct node *);
-struct node *find_max(struct node *);
+struct heap_node *heap_init_node(int, char *);
+void heap_mk_dbl_cir_lst(struct heap_node *);
+struct heap_node *heap_detach_node(struct heap_node *,
+				int);
+struct heap_node *heap_de_init_node(struct heap_node *);
+void heap_de_init_list(struct heap_node *);
+void heap_add_node(struct heap_node *,
+		struct heap_node *);
+struct heap_node *heap_find_max(struct heap_node *);
 
 #endif

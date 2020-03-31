@@ -3,7 +3,7 @@
 
 #include"../heap.h"
 
-void *alloc(char *, int);
-void dealloc(char *, void *, int);
+void *heap_alloc(char *, int);
+void heap_dealloc(char *, void *, int);
 
 #endif

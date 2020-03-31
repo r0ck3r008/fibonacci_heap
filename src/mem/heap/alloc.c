@@ -5,12 +5,17 @@
 
 #include"alloc.h"
 
-void *alloc(char *type, int size)
+void *heap_alloc(char *type, int size)
 {
 	void *ret=NULL;
-	if(!strcmp(type, "struct node")) {
-		ret=malloc(sizeof(struct node)*size);
-		explicit_bzero(ret, sizeof(struct node)*size);
+
+	if(!strcmp(type, "char")) {
+		ret=malloc(sizeof(char)*size);
+		explicit_bzero(ret, sizeof(char)*size);
+	} else if(!strcmp(type, "struct heap_node")) {
+		ret=malloc(sizeof(struct heap_node)*size);
+		((struct heap_node *)ret)->hash=heap_alloc("char", 64);
+		explicit_bzero(ret, sizeof(struct heap_node)*size);
 	} else if(!strcmp(type, "struct heap")) {
 		ret=malloc(sizeof(struct heap)*size);
 		explicit_bzero(ret, sizeof(struct heap)*size);
@@ -25,13 +30,17 @@ void *alloc(char *type, int size)
 	return ret;
 }
 
-void dealloc(char *type, void *buf, int size)
+void heap_dealloc(char *type, void *buf, int size)
 {
-	if(!strcmp(type, "struct node")) {
-		explicit_bzero(buf, sizeof(struct node)*size);
+	if(!strcmp(type, "char")) {
+		explicit_bzero(buf, sizeof(buf)*size);
+		free((char *)buf);
+	} else if(!strcmp(type, "struct heap_node")) {
+		explicit_bzero(buf, sizeof(struct heap_node)*size);
 		free((struct node *)buf);
 	} else if(!strcmp(type, "struct heap")) {
-		explicit_bzero(buf, sizeof(struct node)*size);
+		heap_dealloc("char", ((struct heap_node *)buf)->hash, 64);
+		explicit_bzero(buf, sizeof(struct heap_node)*size);
 		free((struct heap *)buf);
 	}
 

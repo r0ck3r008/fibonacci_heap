@@ -2,11 +2,11 @@
 
 #include"helper.h"
 
-void traverse(struct heap *heap_in, void (fn)(struct node *))
+void heap_traverse(struct heap *heap_in, void (fn)(struct heap_node *))
 {
-	struct node *curr=heap_in->max->nxt;
-	struct node *curr_parent=NULL;
-	struct node *curr_first=heap_in->max;
+	struct heap_node *curr=heap_in->max->nxt;
+	struct heap_node *curr_parent=NULL;
+	struct heap_node *curr_first=heap_in->max;
 	while(1) {
 		if(curr!=curr_first) {
 			curr=curr->nxt;
@@ -38,39 +38,39 @@ void traverse(struct heap *heap_in, void (fn)(struct node *))
 	}
 }
 
-struct node *meld(struct node *tree1, struct node *tree2)
+struct heap_node *heap_meld(struct heap_node *tree1, struct heap_node *tree2)
 {
 	if(tree1->key>tree2->key) {
-		detach_node(tree2, 0);
+		heap_detach_node(tree2, 0);
 		tree2->parent=tree1;
 		if(tree1->child==NULL) {
 			tree1->child=tree2;
-			mk_dbl_cir_lst(tree2);
+			heap_mk_dbl_cir_lst(tree2);
 		} else {
-			add_node(tree1->child, tree2);
+			heap_add_node(tree1->child, tree2);
 		}
 		tree1->degree++;
 		return tree1;
 	} else {
-		detach_node(tree1, 0);
+		heap_detach_node(tree1, 0);
 		tree1->parent=tree2;
 		if(tree2->child==NULL) {
 			tree2->child=tree1;
-			mk_dbl_cir_lst(tree1);
+			heap_mk_dbl_cir_lst(tree1);
 		} else {
-			add_node(tree2->child, tree1);
+			heap_add_node(tree2->child, tree1);
 		}
 		tree2->degree++;
 		return tree2;
 	}
 }
 
-void detach_children(struct node *curr_max)
+void heap_detach_children(struct heap_node *curr_max)
 {
-	struct node *curr=curr_max->child;
+	struct heap_node *curr=curr_max->child;
 	for(int i=0; i<curr_max->degree; i++) {
-		struct node *tmp=detach_node(curr, 1);
-		add_node(curr_max, curr);
+		struct heap_node *tmp=heap_detach_node(curr, 1);
+		heap_add_node(curr_max, curr);
 		curr=tmp;
 	}
 	curr_max->degree=0;

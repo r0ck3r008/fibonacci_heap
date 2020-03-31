@@ -1,10 +1,12 @@
-#ifndef HELPER_H
-#define HELPER_H
+#ifndef HEAP_HELPER_H
+#define HEAP_HELPER_H
 
 #include"../heap.h"
 
-void traverse(struct heap *, void (fn)(struct node *));
-struct node *meld(struct node *, struct node *);
-void detach_children(struct node *);
+void heap_traverse(struct heap *,
+			void (fn)(struct heap_node *));
+struct heap_node *heap_meld(struct heap_node *,
+			struct heap_node *);
+void heap_detach_children(struct heap_node *);
 
 #endif
