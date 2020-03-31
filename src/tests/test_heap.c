@@ -2,7 +2,7 @@
 #include<unistd.h>
 #include<sodium.h>
 
-#include"mem/mem.h"
+#include"mem/heap.h"
 
 #define ELEMS 100000
 int main(int argc, char *argv[])
@@ -19,24 +19,24 @@ int main(int argc, char *argv[])
 		if(!rand_num)
 			continue;
 		if(!i)
-			test_heap=init_heap(rand_num, NULL);
+			test_heap=heap_init(rand_num, NULL);
 		else
-			insert(test_heap, rand_num, NULL);
+			heap_insert(test_heap, rand_num, NULL);
 	}
 
 	u_limit=1000;
 	uint32_t rand_limit=randombytes_uniform(u_limit);
 	for(int i=0; i<rand_limit; i++) {
-		struct node *max=remove_max(test_heap);
+		struct heap_node *max=heap_remove_max(test_heap);
 		if(max==NULL) {
 			printf("Broke at %d\n", i);
 			break;
 		}
 
 		printf("Key: %d at %d\n", max->key, i);
-		dealloc("struct node", max, 1);
+		heap_dealloc("struct heap_node", max, 1);
 	}
 
 
-	de_init_heap(test_heap);
+	heap_de_init(test_heap);
 }
