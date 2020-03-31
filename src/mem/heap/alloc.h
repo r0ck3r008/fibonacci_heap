@@ -1,7 +1,7 @@
-#ifndef ALLOC_H
-#define ALLOC_H
+#ifndef HEAP_ALLOC_H
+#define HEAP_ALLOC_H
 
-#include"../mem.h"
+#include"../heap.h"
 
 void *alloc(char *, int);
 void dealloc(char *, void *, int);
