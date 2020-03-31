@@ -2,11 +2,10 @@
 
 #include"node.h"
 
-struct node *init_node(int key, void *payload)
+struct node *init_node(int key)
 {
 	struct node *new_node=alloc("struct node", 1);
 	new_node->key=key;
-	new_node->payload=payload;
 	new_node->child_cut=0;
 	new_node->degree=0;
 	new_node->child=NULL;
