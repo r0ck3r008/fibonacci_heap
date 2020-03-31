@@ -1,12 +1,14 @@
 #include<stdio.h>
 
+#include"alloc.h"
+#include"node.h"
 #include"helper.h"
 #include"heap.h"
 
-struct heap *init_heap(int key, void *payload)
+struct heap *init_heap(int key)
 {
 	struct heap *new=alloc("struct heap", 1);
-	new->max=init_node(key, payload);
+	new->max=init_node(key);
 
 	return new;
 }
@@ -19,9 +21,9 @@ void de_init_heap(struct heap *heap_in)
 	dealloc("struct heap", heap_in, 1);
 }
 
-struct node *insert(struct heap *heap_in, int key, void *payload)
+struct node *insert(struct heap *heap_in, int key)
 {
-	struct node *new=init_node(key, payload);
+	struct node *new=init_node(key);
 
 	add_node(heap_in->max, new);
 	if(new->key>heap_in->max->key)
