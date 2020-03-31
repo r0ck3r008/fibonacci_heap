@@ -4,14 +4,13 @@
 #include"alloc.h"
 #include"node.h"
 
-struct hmap_node *hmap_init_node(char *key, struct node *node_addr)
+struct hmap_node *hmap_init_node(char *key, struct heap_node *node_addr)
 {
 	struct hmap_node *ret=hmap_alloc("struct hmap_node", 1);
-	char *new_key=hmap_alloc("char", 64);
-	sprintf(new_key, "%s", key);
-	ret->key=key;
+	sprintf(ret->key, "%s", key);
 	ret->node_addr=node_addr;
 	ret->nxt=NULL;
+	ret->prev=NULL;
 
 	return ret;
 }
@@ -31,9 +30,10 @@ void hmap_add_node(struct hmap_node *start, struct hmap_node *new)
 	for(curr; curr->nxt!=NULL; curr=curr->nxt);
 
 	curr->nxt=new;
+	new->prev=curr;
 }
 
-struct node *hmap_find_node(struct hmap_node *start, char *key)
+struct hmap_node *hmap_find_node(struct hmap_node *start, char *key)
 {
 	struct hmap_node *curr=start;
 	int flag=0;
@@ -46,5 +46,20 @@ struct node *hmap_find_node(struct hmap_node *start, char *key)
 
 	if(!flag)
 		return NULL;
-	return curr->node_addr;
+	return curr;
+}
+
+struct hmap_node *hmap_remove_node(struct hmap_node *start, char *key)
+{
+	struct hmap_node *curr=hmap_find_node(start, key);
+	if(curr!=NULL) {
+		if(curr->prev!=NULL)
+			curr->prev->nxt=curr->nxt;
+		if(curr->nxt!=NULL)
+			curr->nxt->prev=curr->prev;
+		curr->nxt=NULL;
+		curr->prev=NULL;
+	}
+
+	return curr;
 }

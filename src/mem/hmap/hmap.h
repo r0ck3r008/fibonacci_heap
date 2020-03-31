@@ -11,8 +11,9 @@ struct hmap
 	struct heap *heap_in;
 };
 
-struct hmap *hmap_hmap(char *, int);
+struct hmap *hmap_init(char *, int);
 void hmap_de_init(struct hmap *);
-void hmap_insert(struct hmap *, char *, int);
+void hmap_update(struct hmap *, char *, int);
+char *hmap_remove_max(struct hmap *);
 
 #endif

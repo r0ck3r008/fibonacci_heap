@@ -36,6 +36,8 @@ void hmap_dealloc(char *type, void *buf, int size)
 		explicit_bzero(buf, sizeof(char)*size);
 		free((char *)buf);
 	} else if(!strcmp(type, "struct hmap_node")) {
+		heap_dealloc("struct heap_node",
+				((struct hmap_node *)buf)->node_addr, 1);
 		hmap_dealloc("char", ((struct hmap_node *)buf)->key, 64);
 		explicit_bzero(buf, sizeof(struct hmap_node)*size);
 		free((struct hmap_node *)buf);
