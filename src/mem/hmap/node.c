@@ -29,7 +29,6 @@ void hmap_add_node(struct hmap_node *start, struct hmap_node *new)
 {
 	struct hmap_node *curr=start;
 	for(curr; curr->nxt!=NULL; curr=curr->nxt);
-
 	curr->nxt=new;
 	new->prev=curr;
 }
@@ -60,8 +59,6 @@ struct hmap_node *hmap_remove_node(struct hmap_node *start, char *key)
 			curr->prev->nxt=curr->nxt;
 		if(curr->nxt!=NULL)
 			curr->nxt->prev=curr->prev;
-		curr->nxt=NULL;
-		curr->prev=NULL;
 	}
 
 	return curr;

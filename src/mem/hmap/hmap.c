@@ -66,6 +66,11 @@ struct hmap_node *hmap_remove_max(struct hmap *hmap_in)
 
 	int indx=hash_it(node->hash);
 	struct hmap_node *curr_node=hmap_remove_node(hmap_in->map[indx],
-							node->hash);
+								node->hash);
+	if(hmap_in->map[indx]==curr_node)
+		hmap_in->map[indx]=curr_node->nxt;
+
+	curr_node->nxt=NULL;
+	curr_node->prev=NULL;
 	return curr_node;
 }
