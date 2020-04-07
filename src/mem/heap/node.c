@@ -40,6 +40,7 @@ struct heap_node *heap_detach_node(struct heap_node *curr, int ret)
 struct heap_node *heap_de_init_node(struct heap_node *curr)
 {
 	struct heap_node *ret=heap_detach_node(curr, 1);
+	heap_dealloc("char", curr->hash, 1);
 	heap_dealloc("struct heap_node", curr, 1);
 
 	return ret;
