@@ -32,15 +32,10 @@ void *hmap_alloc(char *type, int size)
 void hmap_dealloc(char *type, void *buf, int size)
 {
 	if(!strcmp(type, "char")) {
-		explicit_bzero(buf, sizeof(char)*size);
 		free((char *)buf);
 	} else if(!strcmp(type, "struct hmap_node")) {
-		explicit_bzero(buf, sizeof(struct hmap_node)*size);
 		free((struct hmap_node *)buf);
 	} else if(!strcmp(type, "struct hmap")) {
-		explicit_bzero(buf, sizeof(struct hmap)*size);
 		free((struct hmap *)buf);
 	}
-
-	buf=NULL;
 }

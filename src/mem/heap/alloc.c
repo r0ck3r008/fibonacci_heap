@@ -32,15 +32,11 @@ void *heap_alloc(char *type, int size)
 void heap_dealloc(char *type, void *buf, int size)
 {
 	if(!strcmp(type, "char")) {
-		explicit_bzero(buf, sizeof(char)*size);
 		free((char *)buf);
 	} else if(!strcmp(type, "struct heap")) {
-		explicit_bzero(buf, sizeof(struct heap)*size);
 		free((struct heap *)buf);
 	} else if(!strcmp(type, "struct heap_node")) {
-		explicit_bzero(buf, sizeof(struct heap_node)*size);
 		free((struct heap_node *)buf);
 	}
 
-	buf=NULL;
 }
