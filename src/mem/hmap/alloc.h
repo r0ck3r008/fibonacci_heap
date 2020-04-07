@@ -1,7 +1,6 @@
 #ifndef HMAP_ALLOC_H
 #define HMAP_ALLOC_H
 
-#include"../heap.h"
 #include"node.h"
 #include"hmap.h"
 
