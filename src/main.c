@@ -44,7 +44,9 @@ void process_file(FILE *in_f, FILE *out_f)
 	size_t size=0;
 	struct hmap *test_hmap=NULL;
 	while(1) {
-		getline(&line, &size, in_f);
+		int stat=getline(&line, &size, in_f);
+		if(stat==-1)
+			break;
 		if(line[0]=='#') {
 			char *hash=strtok(line, " ");
 			int value=strtol(strtok(NULL, " "), NULL, 10);
