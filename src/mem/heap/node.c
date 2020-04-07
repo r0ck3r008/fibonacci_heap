@@ -13,6 +13,7 @@ struct heap_node *heap_init_node(int key, char *hash)
 	new_node->child=NULL;
 	new_node->parent=NULL;
 	heap_mk_dbl_cir_lst(new_node);
+	return new_node;
 }
 
 //converts a single node to doubly circular list
