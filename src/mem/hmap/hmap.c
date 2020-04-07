@@ -37,7 +37,7 @@ void hmap_de_init(struct hmap *hmap_in)
 	}
 	free(hmap_in->map);
 
-	hmap_dealloc("struct hmap", (void *)hmap_in, 1);
+	hmap_dealloc("struct hmap", hmap_in, 1);
 }
 
 void hmap_update(struct hmap *hmap_in, char *key, int val)
