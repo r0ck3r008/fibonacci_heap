@@ -19,9 +19,14 @@ struct hmap_node *hmap_init_node(char *key, struct heap_node *node_addr)
 void hmap_de_init_list(struct hmap_node *start)
 {
 	struct hmap_node *curr=start->nxt;
-	while(start->nxt!=NULL)
-		hmap_dealloc("struct hmap_node", start->nxt, 1);
+	while(start->nxt!=NULL) {
+		hmap_dealloc("struct hmap_node", curr, 1);
+		curr=start->nxt;
+	}
 
+	heap_dealloc("char", start->node_addr->hash, 64);
+	heap_dealloc("struct heap_node", start->node_addr, 1);
+	hmap_dealloc("char", start->key, 64);
 	hmap_dealloc("struct hmap_node", start, 1);
 }
 
