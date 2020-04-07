@@ -58,7 +58,8 @@ void process_file(FILE *in_f, FILE *out_f)
 		} else {
 			int n=strtol(line, NULL, 10);
 			for(int i=0; i<n; i++) {
-				struct hmap_node *max=hmap_remove_max(test_hmap);
+				struct hmap_node *max=hmap_remove_max(
+								test_hmap);
 				fprintf(out_f, "%s", max->key);
 				if(i!=n-1)
 					fprintf(out_f, ",");
