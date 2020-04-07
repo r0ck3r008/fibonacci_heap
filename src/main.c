@@ -67,7 +67,7 @@ void process_file(FILE *in_f, FILE *out_f)
 					fprintf(out_f, ",");
 				else
 					fprintf(out_f, "\n");
-				hmap_dealloc("struct hmap_node", max, 1);
+//				hmap_dealloc("struct hmap_node", max, 1);
 			}
 		}
 
@@ -76,7 +76,7 @@ void process_file(FILE *in_f, FILE *out_f)
 	}
 
 	free(line);
-	hmap_de_init(test_hmap);
+//	hmap_de_init(test_hmap);
 }
 
 int main(int argc, char **argv)
