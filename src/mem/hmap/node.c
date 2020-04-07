@@ -7,6 +7,7 @@
 struct hmap_node *hmap_init_node(char *key, struct heap_node *node_addr)
 {
 	struct hmap_node *ret=hmap_alloc("struct hmap_node", 1);
+	ret->key=hmap_alloc("char", 64);
 	sprintf(ret->key, "%s", key);
 	ret->node_addr=node_addr;
 	ret->nxt=NULL;
@@ -51,6 +52,8 @@ struct hmap_node *hmap_find_node(struct hmap_node *start, char *key)
 
 struct hmap_node *hmap_remove_node(struct hmap_node *start, char *key)
 {
+	if(start==NULL)
+		return NULL;
 	struct hmap_node *curr=hmap_find_node(start, key);
 	if(curr!=NULL) {
 		if(curr->prev!=NULL)

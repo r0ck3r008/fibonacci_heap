@@ -54,7 +54,6 @@ struct heap_node *heap_remove_max(struct heap *heap_in)
 		int flag=0;
 		for(tmp; tmp!=curr; tmp=tmp->nxt) {
 			//loop through the list to compare with curr
-			//printf("Tmp: %d\tCurr: %d\n", tmp->key, curr->key);
 			if(tmp->degree==curr->degree) {
 				//we always choose the winning tree as current
 				curr=heap_meld(tmp, curr);
@@ -65,7 +64,7 @@ struct heap_node *heap_remove_max(struct heap *heap_in)
 		if(!flag && curr!=heap_in->max)
 			//move ahead if current has no more left to meld
 			curr=curr->nxt;
-		else
+		else if(curr==heap_in->max)
 			break;
 	}
 exit:

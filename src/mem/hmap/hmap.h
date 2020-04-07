@@ -14,6 +14,6 @@ struct hmap
 struct hmap *hmap_init(char *, int);
 void hmap_de_init(struct hmap *);
 void hmap_update(struct hmap *, char *, int);
-char *hmap_remove_max(struct hmap *);
+struct hmap_node *hmap_remove_max(struct hmap *);
 
 #endif

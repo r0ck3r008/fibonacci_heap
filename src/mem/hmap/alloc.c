@@ -14,7 +14,6 @@ void *hmap_alloc(char *type, int size)
 		explicit_bzero(ret, sizeof(char)*size);
 	} else if(!strcmp(type, "struct hmap_node")) {
 		ret=malloc(sizeof(struct hmap_node)*size);
-		((struct hmap_node *)ret)->key=hmap_alloc("char", 64);
 		explicit_bzero(ret, sizeof(struct hmap_node)*size);
 	} else if(!strcmp(type, "struct hmap")) {
 		ret=malloc(sizeof(struct hmap)*size);

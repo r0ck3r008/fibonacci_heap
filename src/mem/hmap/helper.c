@@ -4,7 +4,7 @@ int hash_it(char *key)
 {
 	int sum=0;
 	while(*key!='\0') {
-		sum+=*(int *)key;
+		sum+=(int)*key;
 		key+=sizeof(char);
 	}
 

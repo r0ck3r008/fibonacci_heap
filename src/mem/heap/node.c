@@ -6,6 +6,7 @@ struct heap_node *heap_init_node(int key, char *hash)
 {
 	struct heap_node *new_node=heap_alloc("struct heap_node", 1);
 	new_node->key=key;
+	new_node->hash=heap_alloc("char", 64);
 	sprintf(new_node->hash, "%s", hash);
 	new_node->child_cut=0;
 	new_node->degree=0;
@@ -35,10 +36,10 @@ struct heap_node *heap_detach_node(struct heap_node *curr, int ret)
 	else
 		return NULL;
 }
-struct heap_node *de_init_node(struct heap_node *curr)
+struct heap_node *heap_de_init_node(struct heap_node *curr)
 {
 	struct heap_node *ret=heap_detach_node(curr, 1);
-	heap_dealloc("struct heap_node", (void *)curr, 1);
+	heap_dealloc("struct heap_node", curr, 1);
 
 	return ret;
 }
@@ -47,7 +48,7 @@ void heap_de_init_list(struct heap_node *start)
 {
 	struct heap_node *curr=start->nxt;
 	while(curr!=start)
-		curr=de_init_node(curr);
+		curr=heap_de_init_node(curr);
 
 	heap_de_init_node(start);
 }

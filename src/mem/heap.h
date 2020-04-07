@@ -2,7 +2,6 @@
 #define HEAP_H
 
 #include"heap/heap.h"
-#include"heap/helper.h"
 #include"heap/node.h"
 #include"heap/alloc.h"
 
