@@ -6,11 +6,11 @@ HMAP_OBJS := mem/hmap/hmap.o mem/hmap/helper.o mem/hmap/node.o mem/hmap/alloc.o
 
 all: heap_objs hmap_objs hashtagcounter clean_objs
 
-hashtagcounter: hashtagcounter.o
-	${COMPILER} ./hashtagcounter.o ${HEAP_OBJS} ${HMAP_OBJS} ${LINKER_FLAGS} ./hashtagcounter
+hashtagcounter: main.o
+	${COMPILER} ./main.o ${HEAP_OBJS} ${HMAP_OBJS} ${LINKER_FLAGS} ./hashtagcounter
 
-hashtagcounter.o: hashtagcounter.c
-	${COMPILER} ${COMPILER_FLAGS} ./hashtagcounter.c
+main.o: main.c
+	${COMPILER} ${COMPILER_FLAGS} ./main.c
 
 tests: heap_objs hmap_objs tests_bin
 	${COMPILER} tests/test_heap.o ${HEAP_OBJS} -lsodium ${LINKER_FLAGS} ./test_heap
