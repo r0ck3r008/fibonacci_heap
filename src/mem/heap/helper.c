@@ -40,8 +40,7 @@ void heap_traverse(struct heap *heap_in, void (fn)(struct heap_node *))
 
 struct heap_node *heap_meld(struct heap_node *tree1, struct heap_node *tree2)
 {
-	if(tree1->key>tree2->key) {
-		heap_detach_node(tree2, 0);
+	if((tree1->key)>(tree2->key)) {
 		tree2->parent=tree1;
 		if(tree1->child==NULL) {
 			tree1->child=tree2;
@@ -52,7 +51,6 @@ struct heap_node *heap_meld(struct heap_node *tree1, struct heap_node *tree2)
 		tree1->degree++;
 		return tree1;
 	} else {
-		heap_detach_node(tree1, 0);
 		tree1->parent=tree2;
 		if(tree2->child==NULL) {
 			tree2->child=tree1;
