@@ -4,7 +4,8 @@
 
 #include"mem/heap.h"
 
-#define ELEMS 100000
+#define ELEMS 1000
+
 int main(int argc, char *argv[])
 {
 	if(sodium_init()<0) {
@@ -24,9 +25,7 @@ int main(int argc, char *argv[])
 			heap_insert(test_heap, rand_num, NULL);
 	}
 
-	u_limit=1000;
-	uint32_t rand_limit=randombytes_uniform(u_limit);
-	for(int i=0; i<rand_limit; i++) {
+	for(int i=0; i<ELEMS; i++) {
 		struct heap_node *max=heap_remove_max(test_heap);
 		if(max==NULL) {
 			printf("Broke at %d\n", i);
