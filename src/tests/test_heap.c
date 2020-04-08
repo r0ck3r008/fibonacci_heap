@@ -4,7 +4,7 @@
 
 #include"mem/heap.h"
 
-#define ELEMS 1000
+#define ELEMS 1000000
 
 int main(int argc, char *argv[])
 {
