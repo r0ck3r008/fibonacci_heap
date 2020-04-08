@@ -68,10 +68,13 @@ struct heap_node *heap_meld(struct heap_node *tree1, struct heap_node *tree2)
 void heap_detach_children(struct heap_node *curr_max)
 {
 	struct heap_node *curr=curr_max->child;
-	for(int i=0; i<curr_max->degree; i++) {
+	while(1) {
 		struct heap_node *tmp=heap_detach_node(curr, 1);
 		heap_add_node(curr_max, curr);
-		curr=tmp;
+		if(curr==tmp)
+			break;
+		else
+			curr=tmp;
 	}
 	curr_max->degree=0;
 	curr_max->child=NULL;
