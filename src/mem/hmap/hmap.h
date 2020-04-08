@@ -3,7 +3,7 @@
 
 #include"../heap.h"
 
-#define MAX_SIZE 100
+#define MAX_SIZE 1000
 
 struct hmap
 {
