@@ -69,9 +69,26 @@ struct heap_node *heap_find_max(struct heap_node *curr)
 	struct heap_node *curr_max=start;
 	curr=curr->nxt;
 	for(curr; curr!=start; curr=curr->nxt) {
-		if(curr_max->key < curr->key)
+		if(curr->key > curr_max->key)
 			curr_max=curr;
 	}
 
 	return curr_max;
+}
+
+struct heap_node *heap_find_by_deg(struct heap_node *curr, int trgt)
+{
+	struct heap_node *tmp=curr->nxt;
+	int flag=0;
+	for(tmp; tmp!=curr; tmp=tmp->nxt) {
+		if(tmp->degree==trgt) {
+			flag=1;
+			break;
+		}
+	}
+
+	if(flag)
+		return tmp;
+	else
+		return NULL;
 }
