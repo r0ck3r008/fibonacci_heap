@@ -35,38 +35,38 @@ struct heap_node *heap_insert(struct heap *heap_in, int key, char *hash)
 struct heap_node *heap_remove_max(struct heap *heap_in)
 {
 	if(heap_in->max==NULL)
-		//empty heap
 		return NULL;
+
 	struct heap_node *curr_max=heap_in->max;
 	if(curr_max->degree)
 		heap_detach_children(curr_max);
-	struct heap_node *curr;
-	if((curr=heap_detach_node(curr_max, 1))==curr_max) {
-		//there is only one node
-		heap_in->max=NULL;
-		goto exit;
+
+	struct heap_node *tmp_lst=heap_init_node(0, NULL);
+	tmp_lst->degree=-1;
+	struct heap_node *curr=curr_max->nxt;
+	for(curr; curr!=curr_max;) {
+		struct heap_node *tmp=heap_find_by_deg(tmp_lst, curr->degree);
+		heap_detach_node(curr, 0);
+		if(tmp==NULL) {
+			heap_add_node(tmp_lst, curr);
+		} else {
+			while(tmp!=NULL) {
+				heap_detach_node(tmp, 0);
+				curr=heap_meld(curr, tmp);
+				tmp=heap_find_by_deg(tmp_lst, curr->degree);
+			}
+			heap_add_node(tmp_lst, curr);
+		}
+		curr=heap_in->max->nxt;
 	}
 
-	heap_in->max=heap_find_max(curr);
-	curr=heap_in->max->nxt;
-	while(1) {
-		struct heap_node *tmp=curr->nxt;
-		int flag=0;
-		for(tmp; tmp!=curr; tmp=tmp->nxt) {
-			//loop through the list to compare with curr
-			if(tmp->degree==curr->degree) {
-				//we always choose the winning tree as current
-				curr=heap_meld(tmp, curr);
-				flag=1;
-				break;
-			}
-		}
-		if(!flag && curr!=heap_in->max)
-			//move ahead if current has no more left to meld
-			curr=curr->nxt;
-		else if(curr==heap_in->max)
-			break;
-	}
+	heap_detach_node(curr_max, 0);
+	curr=heap_detach_node(tmp_lst, 1);
+	if(curr==tmp_lst)
+		heap_in->max=NULL;
+	else
+		heap_in->max=heap_find_max(curr);
+
 exit:
 	return curr_max;
 }
