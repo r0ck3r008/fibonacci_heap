@@ -48,7 +48,8 @@ void process_file(FILE *in_f, FILE *out_f)
 		if(stat==-1)
 			break;
 		if(line[0]=='#') {
-			char *hash=strtok(line, " ");
+			char *line1=line+sizeof(char);
+			char *hash=strtok(line1, " ");
 			int value=strtol(strtok(NULL, " "), NULL, 10);
 			if(test_hmap==NULL)
 				test_hmap=hmap_init(hash, value);
