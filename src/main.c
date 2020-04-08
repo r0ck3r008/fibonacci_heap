@@ -18,11 +18,11 @@ void setup(FILE **in_f, FILE **out_f, int argc, char **argv)
 
 	if(argc==3) {
 		explicit_bzero(&buf, sizeof(struct stat));
-		if(stat(argv[2], &buf)!=0) {
+		if(stat(argv[2], &buf)==0) {
 			fprintf(stdout, "Overwriting %s as output file!\n",
-				argv[3]);
+				argv[2]);
 		}
-		if((*out_f=fopen(argv[3], "w"))==NULL) {
+		if((*out_f=fopen(argv[2], "w"))==NULL) {
 			fprintf(stderr, "Error in opening %s for writing: %s\n",
 				argv[3], strerror(errno));
 			_exit(-1);
