@@ -24,7 +24,7 @@ void setup(FILE **in_f, FILE **out_f, int argc, char **argv)
 		}
 		if((*out_f=fopen(argv[2], "w"))==NULL) {
 			fprintf(stderr, "Error in opening %s for writing: %s\n",
-				argv[3], strerror(errno));
+				argv[2], strerror(errno));
 			_exit(-1);
 		}
 	} else {
@@ -33,7 +33,7 @@ void setup(FILE **in_f, FILE **out_f, int argc, char **argv)
 
 	if((*in_f=fopen(argv[1], "r"))==NULL) {
 		fprintf(stderr, "Error in opening %s: %s\n",
-			argv[2], strerror(errno));
+			argv[1], strerror(errno));
 		_exit(-1);
 	}
 }
