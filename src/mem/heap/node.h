@@ -22,5 +22,7 @@ void heap_de_init_list(struct heap_node *);
 void heap_add_node(struct heap_node *,
 		struct heap_node *);
 struct heap_node *heap_find_max(struct heap_node *);
+struct heap_node *heap_find_by_deg(struct heap_node *,
+					int);
 
 #endif
