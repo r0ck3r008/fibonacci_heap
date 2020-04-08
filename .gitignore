@@ -1,2 +1,7 @@
 src/tmp/*
 !src/tmp/.gitkeep
+doc/report.aux
+doc/report.bbl
+doc/report.blg
+doc/report.log
+doc/report.synctex.gz
