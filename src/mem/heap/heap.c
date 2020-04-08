@@ -79,13 +79,17 @@ void heap_inc_key(struct heap *heap_in, struct heap_node *trgt, int set_to)
 		struct heap_node *curr=trgt;
 		while(curr!=NULL) {
 			struct heap_node *tmp=curr->parent;
-			heap_detach_node(curr, 0);
+			struct heap_node *tmp1=heap_detach_node(curr, 1);
 			heap_add_node(heap_in->max, curr);
 			curr->child_cut=0;
 			if(tmp!=NULL) {
 				if(tmp->child==curr) {
-					tmp->child=NULL;
-					tmp->degree=0;
+					if(tmp1==curr) {
+						tmp->child=NULL;
+						tmp->degree=0;
+					} else {
+						tmp->child=tmp1;
+					}
 				}
 				if(!tmp->child_cut) {
 					tmp->child_cut=1;
